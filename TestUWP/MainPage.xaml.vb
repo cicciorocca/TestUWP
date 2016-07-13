@@ -6,14 +6,23 @@
 Public NotInheritable Class MainPage
     Inherits Page
 
+    Private Vm As CodiceFiscaleViewModel
     Public Sub New()
 
         ' La chiamata è richiesta dalla finestra di progettazione.
         InitializeComponent()
 
         ' Aggiungere le eventuali istruzioni di inizializzazione dopo la chiamata a InitializeComponent().
+        Vm = New CodiceFiscaleViewModel()
 
-        DataContext = New CodiceFiscaleViewModel()
+        AddHandler Vm.LoadCompleted, AddressOf LoadCompleted
+        Vm.Initialize()
+    End Sub
+
+    Private Async Sub LoadCompleted(sender As Object, e As EventArgs)
+        Await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, Sub()
+                                                                                   DataContext = Vm
+                                                                               End Sub)
     End Sub
 
     Private Sub OpenPane(sender As Object, e As RoutedEventArgs)
@@ -46,6 +55,10 @@ Public Class CalculateCommand
 End Class
 
 Public Class CodiceFiscaleViewModel
+    Public Delegate Sub LoadCompletedEventHandler(sender As Object, e As EventArgs)
+    Public Event LoadCompleted As LoadCompletedEventHandler
+    Private Worker As BackgroundWorker
+
     Public Property Soggetto As SoggettoFiscale
 
     Private _calcolaCfCommand As CalculateCommand
@@ -68,12 +81,22 @@ Public Class CodiceFiscaleViewModel
         End Get
     End Property
 
-    Public Sub New()
+    Private Sub Load()
         Soggetto = New SoggettoFiscale()
         Dim t As New TestJson
         t.GetComuni()
 
         _Comuni = t.lista
+        RaiseEvent LoadCompleted(Me, Nothing)
+    End Sub
+
+    Public Sub Initialize()
+        Worker.RunWorkerAsync()
+    End Sub
+
+    Public Sub New()
+        Worker = New BackgroundWorker()
+        AddHandler Worker.DoWork, AddressOf Load
     End Sub
 
 End Class

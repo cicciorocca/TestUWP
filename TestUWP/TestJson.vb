@@ -9,11 +9,13 @@ Public Class TestJson
         'Dim Sr As StreamReader = New StreamReader(fs)
 
         Dim sampleFile As Windows.Storage.StorageFile = Await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(New Uri("ms-appx:///Resources/comuni.json.txt"))
-
         Dim StrJson As String = Await Windows.Storage.FileIO.ReadTextAsync(sampleFile)
         'Dim StrJson As String = Await File.ReadAllText("C:\Users\FRANCESCO\Desktop\comuni.json.txt")
         lista = JsonConvert.DeserializeObject(Of List(Of Comune))(StrJson).OrderBy(Function(com) com.nome)
     End Sub
+
+
+
 
 End Class
 
