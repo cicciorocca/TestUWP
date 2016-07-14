@@ -4,21 +4,42 @@ Public Class TestJson
 
     Public Property lista As Object
 
-    Public Async Sub GetComuni()
+    Public Async Function GetComuni() As Task(Of Object)
         'Dim fs As FileStream = New FileStream("C:\Users\FRANCESCO\Desktop\comuni.json.txt", FileMode.Open, FileAccess.Read, FileShare.None, bufferSize:=4096, useAsync:=True)
         'Dim Sr As StreamReader = New StreamReader(fs)
 
         Dim sampleFile As Windows.Storage.StorageFile = Await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(New Uri("ms-appx:///Resources/comuni.json.txt"))
         Dim StrJson As String = Await Windows.Storage.FileIO.ReadTextAsync(sampleFile)
         'Dim StrJson As String = Await File.ReadAllText("C:\Users\FRANCESCO\Desktop\comuni.json.txt")
-        lista = JsonConvert.DeserializeObject(Of List(Of Comune))(StrJson).OrderBy(Function(com) com.nome)
-    End Sub
-
-
-
+        lista = Await Task.Run(Function()
+                                   Return JsonConvert.DeserializeObject(Of List(Of Comune))(StrJson).OrderBy(Function(com) com.nome)
+                               End Function)
+        Return lista
+    End Function
 
 End Class
 
+Public Class ComuneCodCat
+    Public Property nome() As String
+        Get
+            Return m_nome
+        End Get
+        Set
+            m_nome = Value
+        End Set
+    End Property
+    Private m_nome As String
+
+    Public Property codiceCatastale() As String
+        Get
+            Return m_codiceCatastale
+        End Get
+        Set
+            m_codiceCatastale = Value
+        End Set
+    End Property
+    Private m_codiceCatastale As String
+End Class
 
 Public Class Zona
     Public Property nome() As String

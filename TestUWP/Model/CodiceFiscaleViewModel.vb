@@ -1,8 +1,6 @@
-﻿Public Class CodiceFiscaleViewModel
-    Public Delegate Sub LoadCompletedEventHandler(sender As Object, e As EventArgs)
-    Public Event LoadCompleted As LoadCompletedEventHandler
-    Private Worker As BackgroundWorker
+﻿Imports Newtonsoft.Json
 
+Public Class CodiceFiscaleViewModel
     Public Property Soggetto As SoggettoFiscale
 
     Private _calcolaCfCommand As CalculateCommand
@@ -25,22 +23,15 @@
         End Get
     End Property
 
-    Private Sub Load()
+    Public Async Function LoadViewModelAsync() As Task(Of CodiceFiscaleViewModel)
         Soggetto = New SoggettoFiscale()
-        Dim t As New TestJson
-        t.GetComuni()
 
-        _Comuni = t.lista
-        RaiseEvent LoadCompleted(Me, Nothing)
-    End Sub
-
-    Public Sub Initialize()
-        Worker.RunWorkerAsync()
-    End Sub
-
-    Public Sub New()
-        Worker = New BackgroundWorker()
-        AddHandler Worker.DoWork, AddressOf Load
-    End Sub
-
+        'Caricamento dei comuni'
+        Dim ComuniStorage As Windows.Storage.StorageFile = Await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(New Uri("ms-appx:///Resources/ComuniCodCat.json"))
+        Dim StrJsonComuni As String = Await Windows.Storage.FileIO.ReadTextAsync(ComuniStorage)
+        _Comuni = Await Task.Run(Function()
+                                     Return JsonConvert.DeserializeObject(Of List(Of Comune))(StrJsonComuni).OrderBy(Function(com) com.nome)
+                                 End Function)
+        Return Me
+    End Function
 End Class

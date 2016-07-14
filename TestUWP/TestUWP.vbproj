@@ -119,6 +119,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Resources\ComuniCodCat.json" />
     <None Include="TestUWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
