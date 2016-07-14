@@ -103,6 +103,9 @@
     <Compile Include="App.xaml.vb">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CalcoloCfView.xaml.vb">
+      <DependentUpon>CalcoloCfView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CodiceFiscaleHelper.vb" />
     <Compile Include="Converter\DateToDatetimeOffset.vb" />
     <Compile Include="Converter\SexToBooleanConverter.vb" />
@@ -140,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\CalcoloCfView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

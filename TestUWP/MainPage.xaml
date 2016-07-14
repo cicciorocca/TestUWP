@@ -9,43 +9,31 @@
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d">
     <Grid>
-        <Grid.Resources>
-            <local:DateToDatetimeOffset x:Key="DateConv"/>
-            <local:SexToBooleanConverter x:Key="SexConv"/>
-            <DataTemplate x:Key="CmbItemTemplate">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".18*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding codiceCatastale}" TextAlignment="Left" TextWrapping="Wrap"/>
-                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding nome}" TextAlignment="Left" TextWrapping="Wrap"/>
-                </Grid>
-            </DataTemplate>
-        </Grid.Resources>
         <SplitView DisplayMode="Overlay" Name="MainView" >
             <SplitView.Pane>
-                <ListView>
-                    <ListViewHeaderItem>
-                        <StackPanel Orientation="Horizontal">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="2">
                             <Button Click="ClosePane">
                                 <Canvas Width="24" Height="24">
                                     <Path Data="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" Fill="Black" />
                                 </Canvas>
                             </Button>
-                            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="MENU"/>
+                            <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="MENU"/>
                         </StackPanel>
-                    </ListViewHeaderItem>
-                    <ListViewItem>
-                        <TextBlock Text="Calcola"/>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <TextBlock Text="Inverso"/>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <TextBlock Text="Lista"/>
-                    </ListViewItem>
-                </ListView>
+                        <ListView BorderThickness="0">
+                            <ListViewItem>
+                                <TextBlock Text="Calcola"/>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <TextBlock Text="Inverso"/>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <TextBlock Text="Lista"/>
+                            </ListViewItem>
+                        </ListView>
+                    </StackPanel> 
+                </ScrollViewer>
             </SplitView.Pane>
             <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
                 <Grid.RowDefinitions>
@@ -60,39 +48,8 @@
                     </Button>
                     <TextBlock VerticalAlignment="Center" Margin="5,0,0,0" Text="Calcola" FontWeight="Bold"/>
                 </StackPanel>
-                <ScrollViewer Grid.Row="1">
-                <StackPanel  Margin="7">
-                    <StackPanel Margin="0,2,0,0">
-                        <TextBlock Text="Nome" TextWrapping="Wrap"/>
-                        <TextBox Text="{Binding Soggetto.Name, Mode=TwoWay}"/>
-                    </StackPanel>
-                    <StackPanel Margin="0,2,0,0">
-                        <TextBlock Text="Cognome" TextWrapping="Wrap"/>
-                        <TextBox Text="{Binding Soggetto.Cognome, Mode=TwoWay}"/>
-                    </StackPanel>
-                    <StackPanel Margin="0,2,0,0">
-                        <TextBlock Text="Sesso" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                        <StackPanel Orientation="Horizontal" >
-                            <RadioButton IsChecked="{Binding Soggetto.Sesso, Mode=TwoWay, Converter={StaticResource SexConv}, ConverterParameter=M}" Content="M" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,0,0,0" />
-                            <RadioButton IsChecked="{Binding Soggetto.Sesso, Mode=TwoWay, Converter={StaticResource SexConv}, ConverterParameter=F}" Content="F" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,0,0,0" />
-                        </StackPanel>
-                    </StackPanel>
-
-                    <DatePicker HorizontalAlignment="Left" Header="Data di Nascita" Date="{Binding Soggetto.DataNascita, Mode=TwoWay, Converter={StaticResource DateConv}}" />
-                    <StackPanel Margin="0,2,0,0">
-                        <TextBlock Text="Comune di Nascita" TextWrapping="Wrap"/>
-                        <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Comuni, Mode=OneWay}" 
-                                  SelectedValue="{Binding Soggetto.CodiceCatastale, Mode=TwoWay}" ItemTemplate="{StaticResource CmbItemTemplate}" 
-                                  SelectedValuePath="codiceCatastale" />
-                    </StackPanel>
-
-                    <Button Margin="2,15,2,2" HorizontalAlignment="Stretch" FontWeight="Bold" Content="Calcola" Command="{Binding CalcolaCfCommand}" CommandParameter="{Binding}"/>
-
-                    <StackPanel Margin="0,10,0,0">
-                        <TextBlock Text="Codice Fiscale" TextAlignment="Center" TextWrapping="Wrap"/>
-                        <TextBlock Text="{Binding Soggetto.CodiceFiscale, Mode=TwoWay}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="Green" FontWeight="Bold"/>
-                    </StackPanel>
-                </StackPanel>
+                <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" Name="MainContainer">
+                    <ContentControl Content="{Binding}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
                 </ScrollViewer>
             </Grid>
         </SplitView>

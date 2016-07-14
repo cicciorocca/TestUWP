@@ -32,30 +32,34 @@
         Dim SurString As String = String.Empty
         Dim NamString As String = String.Empty
 
-        If sesso = Sex.M Then
-            DayString = datanascita.Day.ToString("00")
-        Else
-            DayString = (datanascita.Day + 40).ToString("00")
-        End If
-        MonString = Mesi(datanascita.Month)
-        YeaString = datanascita.Year.ToString("0000").Substring(2)
+        Try
+            If sesso = Sex.M Then
+                DayString = datanascita.Day.ToString("00")
+            Else
+                DayString = (datanascita.Day + 40).ToString("00")
+            End If
+            MonString = Mesi(datanascita.Month)
+            YeaString = datanascita.Year.ToString("0000").Substring(2)
 
-        Dim SurnameWithoutSpaces As String = cognome.Replace(" ", "").Trim().ToUpper()
-        Dim NameWithourSpaces As String = nome.Replace(" ", "").Trim().ToUpper()
+            Dim SurnameWithoutSpaces As String = cognome.Replace(" ", "").Trim().ToUpper()
+            Dim NameWithourSpaces As String = nome.Replace(" ", "").Trim().ToUpper()
 
-        SurString = ((New String((From lett In SurnameWithoutSpaces Where Consonanti.Contains(lett) Select lett).ToArray())) +
-                            (New String((From lett In SurnameWithoutSpaces Where Not Consonanti.Contains(lett) Select lett).ToArray()))).PadRight(3, "X").Substring(0, 3)
+            SurString = ((New String((From lett In SurnameWithoutSpaces Where Consonanti.Contains(lett) Select lett).ToArray())) +
+                                (New String((From lett In SurnameWithoutSpaces Where Not Consonanti.Contains(lett) Select lett).ToArray()))).PadRight(3, "X").Substring(0, 3)
 
-        Dim NomeSenzaVocali As String = New String((From lett In NameWithourSpaces Where Consonanti.Contains(lett) Select lett).ToArray())
+            Dim NomeSenzaVocali As String = New String((From lett In NameWithourSpaces Where Consonanti.Contains(lett) Select lett).ToArray())
 
-        If NomeSenzaVocali.Length <= 3 Then
-            NamString = (NomeSenzaVocali + (New String((From lett In NameWithourSpaces Where Not Consonanti.Contains(lett) Select lett).ToArray()))).PadRight(3, "X").Substring(0, 3)
-        Else
-            NamString = NomeSenzaVocali(0) + NomeSenzaVocali(2) + NomeSenzaVocali(3)
-        End If
+            If NomeSenzaVocali.Length <= 3 Then
+                NamString = (NomeSenzaVocali + (New String((From lett In NameWithourSpaces Where Not Consonanti.Contains(lett) Select lett).ToArray()))).PadRight(3, "X").Substring(0, 3)
+            Else
+                NamString = NomeSenzaVocali(0) + NomeSenzaVocali(2) + NomeSenzaVocali(3)
+            End If
 
-        Dim TempCodice As String = SurString + NamString + YeaString + MonString + DayString + codicecatastale.Trim()
-        CodiceFiscale = TempCodice + CalcoloCin(TempCodice)
+            Dim TempCodice As String = SurString + NamString + YeaString + MonString + DayString + codicecatastale.Trim()
+            CodiceFiscale = TempCodice + CalcoloCin(TempCodice)
+        Catch ex As Exception
+            Debug.WriteLine(ex.ToString())
+        End Try
 
         Return CodiceFiscale
     End Function
