@@ -103,10 +103,13 @@
     <Compile Include="App.xaml.vb">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\ViewModelBase.vb" />
+    <Compile Include="Model\MainViewModel.vb" />
+    <Compile Include="Util\MyDataTemplateSelector.vb" />
     <Compile Include="View\CalcoloCfView.xaml.vb">
       <DependentUpon>CalcoloCfView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CodiceFiscaleHelper.vb" />
+    <Compile Include="Util\CodiceFiscaleHelper.vb" />
     <Compile Include="Converter\DateToDatetimeOffset.vb" />
     <Compile Include="Converter\SexToBooleanConverter.vb" />
     <Compile Include="MainPage.xaml.vb">
@@ -116,7 +119,7 @@
     <Compile Include="Model\CodiceFiscaleViewModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="Model\SoggettoFiscale.vb" />
-    <Compile Include="TestJson.vb" />
+    <Compile Include="Util\TestJson.vb" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

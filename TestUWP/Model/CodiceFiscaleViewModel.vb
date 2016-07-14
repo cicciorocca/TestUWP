@@ -1,6 +1,9 @@
 ﻿Imports Newtonsoft.Json
 
 Public Class CodiceFiscaleViewModel
+    Inherits ViewModelBase
+
+    Public ReadOnly Property VmName As String = "Calcola"
     Public Property Soggetto As SoggettoFiscale
 
     Private _calcolaCfCommand As CalculateCommand
@@ -23,7 +26,20 @@ Public Class CodiceFiscaleViewModel
         End Get
     End Property
 
-    Public Async Function LoadViewModelAsync() As Task(Of CodiceFiscaleViewModel)
+    'Public Async Function LoadViewModelAsync() As Task(Of CodiceFiscaleViewModel)
+    '    Soggetto = New SoggettoFiscale()
+
+    '    'Caricamento dei comuni'
+    '    Dim ComuniStorage As Windows.Storage.StorageFile = Await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(New Uri("ms-appx:///Resources/ComuniCodCat.json"))
+    '    Dim StrJsonComuni As String = Await Windows.Storage.FileIO.ReadTextAsync(ComuniStorage)
+
+    '    _Comuni = Await Task.Run(Function()
+    '                                 Return JsonConvert.DeserializeObject(Of List(Of ComuneCodCat))(StrJsonComuni).OrderBy(Function(com) com.nome)
+    '                             End Function)
+    '    Return Me
+    'End Function
+
+    Public Overrides Async Function LoadViewModelAsync() As Task(Of Object)
         Soggetto = New SoggettoFiscale()
 
         'Caricamento dei comuni'
@@ -35,4 +51,5 @@ Public Class CodiceFiscaleViewModel
                                  End Function)
         Return Me
     End Function
+
 End Class

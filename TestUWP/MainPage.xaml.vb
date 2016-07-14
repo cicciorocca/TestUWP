@@ -4,20 +4,22 @@
 Public NotInheritable Class MainPage
     Inherits Page
 
-    Private Vm As CodiceFiscaleViewModel
+    Private Vm As MainViewModel
 
     Public Sub New()
-
         ' La chiamata è richiesta dalla finestra di progettazione.
         InitializeComponent()
 
-        ' Aggiungere le eventuali istruzioni di inizializzazione dopo la chiamata a InitializeComponent().
-        Vm = New CodiceFiscaleViewModel()
+        Vm = New MainViewModel()
+
+        Vm.MainVm = New List(Of Object) From {New CodiceFiscaleViewModel()}
+        Vm.SelectedViewModel = Vm.MainVm(0)
+
+        DataContext = Vm
     End Sub
 
     Private Sub OpenPane(sender As Object, e As RoutedEventArgs)
         MainView.IsPaneOpen = True
-
         'Dim l As List(Of ComuneCodCat) = New List(Of ComuneCodCat)()
 
         'For Each elem In Vm.Comuni
@@ -44,13 +46,7 @@ Public NotInheritable Class MainPage
         MainView.IsPaneOpen = False
     End Sub
 
-    Private Async Sub MainPage_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        Vm = Await Vm.LoadViewModelAsync()
 
-        Await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, Sub()
-                                                                                   DataContext = Vm
-                                                                               End Sub)
-    End Sub
 End Class
 
 

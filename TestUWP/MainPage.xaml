@@ -8,6 +8,20 @@
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <local:TemplateCollection x:Key="templates">
+            <local:Template DataType="TestUWP.CodiceFiscaleViewModel">
+                <local:Template.DataTemplate>
+                    <DataTemplate x:DataType="local:CodiceFiscaleViewModel">
+                        <local:CalcoloCfView />
+                    </DataTemplate>
+                </local:Template.DataTemplate>
+            </local:Template>
+        </local:TemplateCollection>
+        <local:MyDataTemplateSelector x:Key="TemplateSel" Templates="{StaticResource templates}"/>
+    </Page.Resources>
+    
     <Grid>
         <SplitView DisplayMode="Overlay" Name="MainView" >
             <SplitView.Pane>
@@ -21,16 +35,12 @@
                             </Button>
                             <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="MENU"/>
                         </StackPanel>
-                        <ListView BorderThickness="0">
-                            <ListViewItem>
-                                <TextBlock Text="Calcola"/>
-                            </ListViewItem>
-                            <ListViewItem>
-                                <TextBlock Text="Inverso"/>
-                            </ListViewItem>
-                            <ListViewItem>
-                                <TextBlock Text="Lista"/>
-                            </ListViewItem>
+                        <ListView BorderThickness="0" ItemsSource="{Binding MainVm}" SelectedValue="{Binding SelectedViewModel}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding VmName}"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                         </ListView>
                     </StackPanel> 
                 </ScrollViewer>
@@ -46,10 +56,12 @@
                             <Path Data="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" Fill="Black" />
                         </Canvas>
                     </Button>
-                    <TextBlock VerticalAlignment="Center" Margin="5,0,0,0" Text="Calcola" FontWeight="Bold"/>
+                    <TextBlock VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding SelectedViewModel.VmName}" FontWeight="Bold"/>
+                    <ProgressRing x:Name="ProgrRing" Visibility="Visible" IsActive="True" Foreground="{StaticResource ProgressBarForegroundThemeBrush}" Margin="10,0,0,0"/>
                 </StackPanel>
                 <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" Name="MainContainer">
-                    <ContentControl Content="{Binding}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
+                    <ContentControl Margin="7" Content="{Binding SelectedViewModel}" ContentTemplateSelector="{StaticResource TemplateSel}" 
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
                 </ScrollViewer>
             </Grid>
         </SplitView>
