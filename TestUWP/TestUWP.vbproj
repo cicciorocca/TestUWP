@@ -103,10 +103,16 @@
     <Compile Include="App.xaml.vb">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CodiceFiscaleHelper.vb" />
+    <Compile Include="Converter\DateToDatetimeOffset.vb" />
+    <Compile Include="Converter\SexToBooleanConverter.vb" />
     <Compile Include="MainPage.xaml.vb">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\CalculateCommand.vb" />
+    <Compile Include="Model\CodiceFiscaleViewModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="Model\SoggettoFiscale.vb" />
     <Compile Include="TestJson.vb" />
   </ItemGroup>
   <ItemGroup>

@@ -60,7 +60,8 @@
                     </Button>
                     <TextBlock VerticalAlignment="Center" Margin="5,0,0,0" Text="Calcola" FontWeight="Bold"/>
                 </StackPanel>
-                <StackPanel Grid.Row="1" Margin="7">
+                <ScrollViewer Grid.Row="1">
+                <StackPanel  Margin="7">
                     <StackPanel Margin="0,2,0,0">
                         <TextBlock Text="Nome" TextWrapping="Wrap"/>
                         <TextBox Text="{Binding Soggetto.Name, Mode=TwoWay}"/>
@@ -92,6 +93,7 @@
                         <TextBlock Text="{Binding Soggetto.CodiceFiscale, Mode=TwoWay}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="Green" FontWeight="Bold"/>
                     </StackPanel>
                 </StackPanel>
+                </ScrollViewer>
             </Grid>
         </SplitView>
     </Grid>
