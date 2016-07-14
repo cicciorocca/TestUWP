@@ -37,7 +37,7 @@
             </StackPanel>
         </StackPanel>
 
-        <DatePicker HorizontalAlignment="Left" Header="Data di Nascita" Date="{Binding Soggetto.DataNascita, Mode=TwoWay, Converter={StaticResource DateConv}}" />
+        <DatePicker HorizontalAlignment="Stretch" Header="Data di Nascita" Date="{Binding Soggetto.DataNascita, Mode=TwoWay, Converter={StaticResource DateConv}}" />
         <StackPanel Margin="0,2,0,0">
             <TextBlock Text="Comune di Nascita" TextWrapping="Wrap"/>
             <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Comuni, Mode=OneWay}" 
