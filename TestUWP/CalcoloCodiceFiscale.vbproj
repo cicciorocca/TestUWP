@@ -103,6 +103,7 @@
     <Compile Include="App.xaml.vb">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\ListaViewModel.vb" />
     <Compile Include="Model\ViewModelBase.vb" />
     <Compile Include="Model\MainViewModel.vb" />
     <Compile Include="Util\MyDataTemplateSelector.vb" />
@@ -115,7 +116,7 @@
     <Compile Include="MainPage.xaml.vb">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\CalculateCommand.vb" />
+    <Compile Include="Command\CalculateCommand.vb" />
     <Compile Include="Model\CodiceFiscaleViewModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="Model\SoggettoFiscale.vb" />

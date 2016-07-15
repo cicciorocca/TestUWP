@@ -21,24 +21,24 @@
         </DataTemplate>
     </UserControl.Resources>
     <StackPanel>
-        <StackPanel Margin="0,2,0,0">
+        <StackPanel Margin="0,10,0,0">
             <TextBlock Text="Nome" TextWrapping="Wrap"/>
             <TextBox Text="{Binding Soggetto.Name, Mode=TwoWay}"/>
         </StackPanel>
-        <StackPanel Margin="0,2,0,0">
+        <StackPanel Margin="0,10,0,0">
             <TextBlock Text="Cognome" TextWrapping="Wrap"/>
             <TextBox Text="{Binding Soggetto.Cognome, Mode=TwoWay}"/>
         </StackPanel>
-        <StackPanel Margin="0,2,0,0">
+        <StackPanel Margin="0,10,0,0">
             <TextBlock Text="Sesso" VerticalAlignment="Center" TextWrapping="Wrap"/>
             <StackPanel Orientation="Horizontal" >
                 <RadioButton IsChecked="{Binding Soggetto.Sesso, Mode=TwoWay, Converter={StaticResource SexConv}, ConverterParameter=M}" Content="M" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,0,0,0" />
                 <RadioButton IsChecked="{Binding Soggetto.Sesso, Mode=TwoWay, Converter={StaticResource SexConv}, ConverterParameter=F}" Content="F" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,0,0,0" />
             </StackPanel>
         </StackPanel>
-
-        <DatePicker HorizontalAlignment="Stretch" Header="Data di Nascita" Date="{Binding Soggetto.DataNascita, Mode=TwoWay, Converter={StaticResource DateConv}}" />
-        <StackPanel Margin="0,2,0,0">
+        <DatePicker Margin="0,10,0,0" HorizontalAlignment="Stretch" Header="Data di Nascita" 
+                    Date="{Binding Soggetto.DataNascita, Mode=TwoWay, Converter={StaticResource DateConv}}" />
+        <StackPanel Margin="0,10,0,0">
             <TextBlock Text="Comune di Nascita" TextWrapping="Wrap"/>
             <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Comuni, Mode=OneWay}" 
                                       SelectedValue="{Binding Soggetto.CodiceCatastale, Mode=TwoWay}" 
@@ -46,7 +46,7 @@
                                       SelectedValuePath="codiceCatastale" />
         </StackPanel>
 
-        <Button Margin="2,15,2,2" HorizontalAlignment="Stretch" FontWeight="Bold" Content="Calcola" Command="{Binding CalcolaCfCommand}" CommandParameter="{Binding}"/>
+        <Button Margin="0,15,0,0" HorizontalAlignment="Stretch" FontWeight="Bold" Content="Calcola" Command="{Binding CalcolaCfCommand}" CommandParameter="{Binding}"/>
 
         <StackPanel Margin="0,10,0,0">
             <TextBlock Text="Codice Fiscale" TextAlignment="Center" TextWrapping="Wrap"/>

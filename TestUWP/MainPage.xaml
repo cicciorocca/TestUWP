@@ -42,7 +42,7 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </StackPanel> 
+                    </StackPanel>
                 </ScrollViewer>
             </SplitView.Pane>
             <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
@@ -66,5 +66,12 @@
             </Grid>
         </SplitView>
     </Grid>
-   
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Compact">
+            <AppBarButton Icon="Add" Label="Nuovo"/>
+            <AppBarButton Icon="Save" Label="Salva"/>
+            <AppBarButton Icon="Delete" Label="Cancella"/>
+            <AppBarButton Icon="BrowsePhotos" Label="Tessera" />
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>
