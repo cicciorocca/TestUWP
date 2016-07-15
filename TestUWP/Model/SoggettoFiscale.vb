@@ -7,6 +7,8 @@ End Enum
 Public Class SoggettoFiscale
     Implements INotifyPropertyChanged
 
+    Public Property SoggettoFiscaleId As Integer
+
     Private _Name As String
     Public Property Name As String
         Get

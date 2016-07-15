@@ -1,8 +1,17 @@
-﻿''' <summary>
-''' Fornisci un comportamento specifico dell'applicazione in supplemento alla classe Application predefinita.
-''' </summary>
+﻿Imports Microsoft.EntityFrameworkCore
+
 NotInheritable Class App
     Inherits Application
+
+    Public Sub New()
+        ' La chiamata è richiesta dalla finestra di progettazione.
+        InitializeComponent()
+
+        ' Aggiungere le eventuali istruzioni di inizializzazione dopo la chiamata a InitializeComponent().
+        Using db As AppCodFiscContext = New AppCodFiscContext()
+            db.Database.Migrate()
+        End Using
+    End Sub
 
     ''' <summary>
     ''' Richiamato quando l'applicazione viene avviata normalmente dall'utente. All'avvio dell'applicazione

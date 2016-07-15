@@ -97,12 +97,15 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="App.config" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.vb">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\AppCodFiscContext.vb" />
+    <Compile Include="Model\ComuneCodCat.vb" />
     <Compile Include="Model\ListaViewModel.vb" />
     <Compile Include="Model\ViewModelBase.vb" />
     <Compile Include="Model\MainViewModel.vb" />
@@ -126,6 +129,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Migrations\20160715103656_FirstMigrationAppCodFisc.cs" />
+    <Content Include="Migrations\20160715103656_FirstMigrationAppCodFisc.Designer.cs" />
+    <Content Include="Migrations\AppCodFiscContextModelSnapshot.cs" />
     <Content Include="Resources\ComuniCodCat.json" />
     <None Include="TestUWP_TemporaryKey.pfx" />
   </ItemGroup>
