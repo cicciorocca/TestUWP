@@ -129,8 +129,11 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="bin\x86\Debug\AppX\Migrations\AppCodFiscContextModelSnapshot.cs" />
     <Content Include="Migrations\20160715103656_FirstMigrationAppCodFisc.cs" />
     <Content Include="Migrations\20160715103656_FirstMigrationAppCodFisc.Designer.cs" />
+    <Content Include="Migrations\20160718095226_SecondMigration.cs" />
+    <Content Include="Migrations\20160718095226_SecondMigration.Designer.cs" />
     <Content Include="Migrations\AppCodFiscContextModelSnapshot.cs" />
     <Content Include="Resources\ComuniCodCat.json" />
     <None Include="TestUWP_TemporaryKey.pfx" />

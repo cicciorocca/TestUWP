@@ -1,6 +1,4 @@
-﻿Imports Newtonsoft.Json
-
-Public Class CodiceFiscaleViewModel
+﻿Public Class CodiceFiscaleViewModel
     Inherits ViewModelBase
 
     Public ReadOnly Property VmName As String = "Calcola"
@@ -19,36 +17,20 @@ Public Class CodiceFiscaleViewModel
         End Set
     End Property
 
-    Private _Comuni As Object
-    Public ReadOnly Property Comuni As Object
+    Private _Comuni As List(Of ComuneCodCat)
+    Public ReadOnly Property Comuni As List(Of ComuneCodCat)
         Get
             Return _Comuni
         End Get
     End Property
 
-    'Public Async Function LoadViewModelAsync() As Task(Of CodiceFiscaleViewModel)
-    '    Soggetto = New SoggettoFiscale()
-
-    '    'Caricamento dei comuni'
-    '    Dim ComuniStorage As Windows.Storage.StorageFile = Await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(New Uri("ms-appx:///Resources/ComuniCodCat.json"))
-    '    Dim StrJsonComuni As String = Await Windows.Storage.FileIO.ReadTextAsync(ComuniStorage)
-
-    '    _Comuni = Await Task.Run(Function()
-    '                                 Return JsonConvert.DeserializeObject(Of List(Of ComuneCodCat))(StrJsonComuni).OrderBy(Function(com) com.nome)
-    '                             End Function)
-    '    Return Me
-    'End Function
-
-    Public Overrides Async Function LoadViewModelAsync() As Task(Of Object)
+    Public Overrides Function LoadViewModelAsync() As Object
         Soggetto = New SoggettoFiscale()
 
-        'Caricamento dei comuni'
-        Dim ComuniStorage As Windows.Storage.StorageFile = Await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(New Uri("ms-appx:///Resources/ComuniCodCat.json"))
-        Dim StrJsonComuni As String = Await Windows.Storage.FileIO.ReadTextAsync(ComuniStorage)
+        If AppContext IsNot Nothing Then
+            _Comuni = AppContext.Comuni.OrderBy(Of String)(Function(com) com.nome).ToList()
+        End If
 
-        _Comuni = Await Task.Run(Function()
-                                     Return JsonConvert.DeserializeObject(Of List(Of ComuneCodCat))(StrJsonComuni).OrderBy(Function(com) com.nome)
-                                 End Function)
         Return Me
     End Function
 

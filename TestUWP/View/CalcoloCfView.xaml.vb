@@ -7,7 +7,7 @@ Public NotInheritable Class CalcoloCfView
     Private Async Sub MainPage_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         Dim Vm As Object = DataContext
         DataContext = Nothing
-        Vm = Await Vm.LoadViewModelAsync()
+        Vm = Vm.LoadViewModelAsync()
 
         Await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, Sub()
                                                                                    DataContext = Vm

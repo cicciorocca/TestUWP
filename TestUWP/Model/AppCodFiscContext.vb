@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.EntityFrameworkCore
+Imports Windows.Storage
 
 Public Class AppCodFiscContext
     Inherits DbContext
@@ -7,6 +8,11 @@ Public Class AppCodFiscContext
     Public Property Comuni As DbSet(Of ComuneCodCat)
 
     Protected Overrides Sub OnConfiguring(optionsBuilder As DbContextOptionsBuilder)
-        optionsBuilder.UseSqlite("Filename=AppCodfisc.db")
+        Dim path As String = ApplicationData.Current.LocalFolder.Path
+        If Not File.Exists(IO.Path.Combine(path, "AppCodfisc.db")) Then
+            File.Create(IO.Path.Combine(path, "AppCodfisc.db"))
+        End If
+        optionsBuilder.UseSqlite("Data Source=" + IO.Path.Combine(path, "AppCodfisc.db") + ";")
     End Sub
+
 End Class

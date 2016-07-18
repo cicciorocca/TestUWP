@@ -1,3 +1,5 @@
 ﻿Public MustInherit Class ViewModelBase
-    Public MustOverride Async Function LoadViewModelAsync() As Task(Of Object)
+    Public Property AppContext As AppCodFiscContext
+
+    Public MustOverride Function LoadViewModelAsync() As Object
 End Class

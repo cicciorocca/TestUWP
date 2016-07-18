@@ -9,6 +9,7 @@ NotInheritable Class App
 
         ' Aggiungere le eventuali istruzioni di inizializzazione dopo la chiamata a InitializeComponent().
         Using db As AppCodFiscContext = New AppCodFiscContext()
+            Dim p = db.Database.EnsureCreated()
             db.Database.Migrate()
         End Using
     End Sub
