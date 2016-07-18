@@ -8,4 +8,8 @@
     Public Overrides Function LoadViewModelAsync() As Object
         Throw New NotImplementedException()
     End Function
+
+    Public Overrides Function GetAppBar() As List(Of AppBarButton)
+        Throw New NotImplementedException()
+    End Function
 End Class

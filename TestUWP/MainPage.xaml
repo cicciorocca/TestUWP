@@ -35,7 +35,7 @@
                             </Button>
                             <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="MENU"/>
                         </StackPanel>
-                        <ListView BorderThickness="0" ItemsSource="{Binding MainVm}" SelectedValue="{Binding SelectedViewModel}">
+                        <ListView BorderThickness="0" ItemsSource="{Binding MainVm}" SelectedValue="{Binding SelectedViewModel}" SelectionChanged="ListView_SelectionChanged">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding VmName}"/>
@@ -67,8 +67,8 @@
         </SplitView>
     </Grid>
     <Page.BottomAppBar>
-        <CommandBar ClosedDisplayMode="Compact">
-            <AppBarButton Icon="Add" Label="Nuovo"/>
+        <CommandBar x:Name="CmdBar" ClosedDisplayMode="Compact">
+            <AppBarButton Icon="Add" Label="Nuovo" Command="{Binding}"/>
             <AppBarButton Icon="Save" Label="Salva"/>
             <AppBarButton Icon="Delete" Label="Cancella"/>
             <AppBarButton Icon="BrowsePhotos" Label="Tessera" />

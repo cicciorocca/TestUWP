@@ -27,7 +27,13 @@ Public NotInheritable Class MainPage
         MainView.IsPaneOpen = False
     End Sub
 
+    Private Sub ListView_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
+        CmdBar.PrimaryCommands.Clear()
 
+        For Each cmd In Vm.SelectedViewModel.GetAppBar
+            CmdBar.PrimaryCommands.Add(cmd)
+        Next
+    End Sub
 End Class
 
 
