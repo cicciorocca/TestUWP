@@ -104,6 +104,7 @@
     <Compile Include="App.xaml.vb">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\StringaToInizialeConverter.vb" />
     <Compile Include="Model\AppCodFiscContext.vb" />
     <Compile Include="Model\ComuneCodCat.vb" />
     <Compile Include="Model\ListaViewModel.vb" />

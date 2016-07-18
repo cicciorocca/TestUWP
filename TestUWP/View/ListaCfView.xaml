@@ -7,9 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <UserControl.Resources>
+        <local:StringaToInizialeConverter x:Key="InitConv"/>
         <DataTemplate x:Key="LwItemTempl">
-            
-                <Grid Margin="3">
+            <Grid Margin="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50"/>
                         <ColumnDefinition Width="*"/>
@@ -18,9 +18,10 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Ellipse Stroke="LightGray" StrokeThickness="1.2" Grid.RowSpan="2" Grid.Column="0" Width="48" Height="48"/>
+                    <Ellipse Stroke="Gray" StrokeThickness="1.2" Grid.RowSpan="2" Grid.Column="0" Width="48" Height="48"/>
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="FR" TextAlignment="Center"/>
+                    <TextBlock Text="{Binding Name, Mode=OneWay, Converter={StaticResource InitConv}}" TextAlignment="Center"/>
+                    <TextBlock Text="{Binding Cognome, Mode=OneWay, Converter={StaticResource InitConv}}" TextAlignment="Center"/>
                     </StackPanel>
                     <StackPanel Margin="20,0,0,0" Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock Text="{Binding Name}"/>

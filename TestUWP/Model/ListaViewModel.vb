@@ -14,7 +14,31 @@
     End Function
 
     Public Overrides Function GetAppBar() As List(Of AppBarButton)
-        'TODO: Implementare command
-        Return New List(Of AppBarButton)
+        Dim cmds As List(Of AppBarButton) = New List(Of AppBarButton)
+
+        ' New Button '
+        Dim addBtn As AppBarButton = New AppBarButton
+        addBtn.Label = "Nuovo"
+        addBtn.Icon = New SymbolIcon(Symbol.AddFriend)
+        cmds.Add(addBtn)
+
+        ' Delete Button '
+        Dim deleteBtn As AppBarButton = New AppBarButton()
+        deleteBtn.Label = "Elimina"
+        deleteBtn.Icon = New SymbolIcon(Symbol.Delete)
+        cmds.Add(deleteBtn)
+
+        ' Edit Button '
+        Dim editBtn As AppBarButton = New AppBarButton()
+        editBtn.Label = "Modifica"
+        editBtn.Icon = New SymbolIcon(Symbol.Edit)
+        cmds.Add(editBtn)
+        'saveBtn.SetBinding(AppBarButton.CommandProperty, New Binding() With {.Source = Me, .Path = New PropertyPath("SalvaCfCommand")})
+
+
+        'TODO: Tessera Button '
+        'TODO: New Button '
+
+        Return cmds
     End Function
 End Class
