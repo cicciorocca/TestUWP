@@ -12,7 +12,10 @@ Public NotInheritable Class MainPage
 
         Vm = New MainViewModel()
 
-        Vm.MainVm = New List(Of Object) From {New CodiceFiscaleViewModel() With {.AppContext = Vm.GetAppContextInstance()}}
+        Vm.MainVm = New List(Of Object) From
+            {New ListaViewModel() With {.AppContext = Vm.GetAppContextInstance()},
+            New CodiceFiscaleViewModel() With {.AppContext = Vm.GetAppContextInstance()}}
+
         Vm.SelectedViewModel = Vm.MainVm(0)
 
 

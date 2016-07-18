@@ -1,0 +1,36 @@
+﻿<UserControl
+    x:Class="TestUWP.ListaCfView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TestUWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <DataTemplate x:Key="LwItemTempl">
+            
+                <Grid Margin="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Ellipse Stroke="LightGray" StrokeThickness="1.2" Grid.RowSpan="2" Grid.Column="0" Width="48" Height="48"/>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="FR" TextAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Margin="20,0,0,0" Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Margin="5,0,0,0" Text="{Binding Cognome}"/>
+                    </StackPanel>
+                    <TextBlock Margin="20,0,0,0" Grid.Column="1" Grid.Row="1" Text="{Binding CodiceFiscale}" FontWeight="Bold"/>
+                </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <ListView ItemTemplate="{StaticResource LwItemTempl}" ItemsSource="{Binding Soggetti, Mode=OneWay}"/>
+    </Grid>
+</UserControl>

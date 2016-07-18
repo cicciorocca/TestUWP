@@ -18,8 +18,16 @@
                     </DataTemplate>
                 </local:Template.DataTemplate>
             </local:Template>
+            <local:Template DataType="TestUWP.ListaViewModel">
+                <local:Template.DataTemplate>
+                    <DataTemplate x:DataType="local:ListaViewModel">
+                        <local:ListaCfView/>
+                    </DataTemplate>
+                </local:Template.DataTemplate>
+            </local:Template>
         </local:TemplateCollection>
         <local:MyDataTemplateSelector x:Key="TemplateSel" Templates="{StaticResource templates}"/>
+        
     </Page.Resources>
     
     <Grid>
@@ -35,7 +43,8 @@
                             </Button>
                             <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="MENU"/>
                         </StackPanel>
-                        <ListView BorderThickness="0" ItemsSource="{Binding MainVm}" SelectedValue="{Binding SelectedViewModel}" SelectionChanged="ListView_SelectionChanged">
+                        <ListView BorderThickness="0" ItemsSource="{Binding MainVm}" SelectedValue="{Binding SelectedViewModel, Mode=TwoWay}" 
+                                  SelectionChanged="ListView_SelectionChanged">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding VmName}"/>
