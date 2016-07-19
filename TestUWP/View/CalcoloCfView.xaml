@@ -36,7 +36,7 @@
                 <RadioButton IsChecked="{Binding Soggetto.Sesso, Mode=TwoWay, Converter={StaticResource SexConv}, ConverterParameter=F}" Content="F" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,0,0,0" />
             </StackPanel>
         </StackPanel>
-        <DatePicker Margin="0,10,0,0" HorizontalAlignment="Stretch" Header="Data di Nascita" 
+        <DatePicker Margin="0,10,0,0" HorizontalAlignment="Stretch" Header="Data di Nascita" HorizontalContentAlignment="Stretch"
                     Date="{Binding Soggetto.DataNascita, Mode=TwoWay, Converter={StaticResource DateConv}}" />
         <StackPanel Margin="0,10,0,0">
             <TextBlock Text="Comune di Nascita" TextWrapping="Wrap"/>

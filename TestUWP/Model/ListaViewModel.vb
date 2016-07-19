@@ -3,7 +3,7 @@
 
     Public ReadOnly Property VmName As String = "Lista"
     Public Property Soggetti As ObservableCollection(Of SoggettoFiscale)
-
+    Public Property SelectedSoggetto As SoggettoFiscale
 
     Public Overrides Function LoadViewModelAsync() As Object
         If AppContext IsNot Nothing Then
@@ -33,12 +33,13 @@
         editBtn.Label = "Modifica"
         editBtn.Icon = New SymbolIcon(Symbol.Edit)
         cmds.Add(editBtn)
-        'saveBtn.SetBinding(AppBarButton.CommandProperty, New Binding() With {.Source = Me, .Path = New PropertyPath("SalvaCfCommand")})
 
+        'saveBtn.SetBinding(AppBarButton.CommandProperty, New Binding() With {.Source = Me, .Path = New PropertyPath("SalvaCfCommand")})
 
         'TODO: Tessera Button '
         'TODO: New Button '
 
         Return cmds
     End Function
+
 End Class

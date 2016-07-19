@@ -32,6 +32,6 @@
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
-        <ListView ItemTemplate="{StaticResource LwItemTempl}" ItemsSource="{Binding Soggetti, Mode=OneWay}"/>
+        <ListView ItemTemplate="{StaticResource LwItemTempl}" ItemsSource="{Binding Soggetti, Mode=OneWay}" SelectedValue="{Binding SelectedSoggetto, Mode=TwoWay}" />
     </Grid>
 </UserControl>

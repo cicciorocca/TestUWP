@@ -34,7 +34,7 @@ Public Class CodiceFiscaleViewModel
             If Soggetto Is Nothing Then
                 Return False
             End If
-            Return (Soggetto.Cognome IsNot Nothing And Soggetto.Name IsNot Nothing And Not Soggetto.DataNascita.Equals(DateTime.MinValue) And Soggetto.CodiceCatastale IsNot Nothing)
+            Return (Soggetto.Cognome IsNot Nothing And Soggetto.Name IsNot Nothing And Not Soggetto.DataNascita.Equals(Date.MinValue) And Soggetto.CodiceCatastale IsNot Nothing)
         End Get
     End Property
 
@@ -57,7 +57,9 @@ Public Class CodiceFiscaleViewModel
     Public Property SalvaCfCommand As RelayCommand
         Get
             If _salvaCfCommand Is Nothing Then
-                _salvaCfCommand = New RelayCommand(AddressOf SalvaCf, AddressOf CanSalvaCf)
+                _salvaCfCommand = New RelayCommand(AddressOf SalvaCf, Function()
+                                                                          Return True
+                                                                      End Function)
             End If
             Return _salvaCfCommand
         End Get
@@ -73,10 +75,6 @@ Public Class CodiceFiscaleViewModel
             AppContext.SaveChanges()
         End If
     End Sub
-
-    Private Function CanSalvaCf() As Boolean
-        Return True
-    End Function
 
     Private Sub CalcolaCf()
         Soggetto.CodiceFiscale = CodiceFiscaleHelper.CalcolaCodiceFiscale(nome:=Soggetto.Name, cognome:=Soggetto.Cognome,
