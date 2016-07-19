@@ -21,13 +21,6 @@ Public Class CodiceFiscaleViewModel
     End Property
 
 #Region "Commands"
-    Private _canExecuteSalvaCf As Boolean
-    Public ReadOnly Property CanExecuteSalvaCf As Boolean
-        Get
-            Return True
-        End Get
-    End Property
-
     Private _canExecuteCalcolaCf As Boolean
     Public ReadOnly Property CanExecuteCalcolaCf As Boolean
         Get
@@ -53,22 +46,8 @@ Public Class CodiceFiscaleViewModel
         End Set
     End Property
 
-    Private _salvaCfCommand As RelayCommand
-    Public Property SalvaCfCommand As RelayCommand
-        Get
-            If _salvaCfCommand Is Nothing Then
-                _salvaCfCommand = New RelayCommand(AddressOf SalvaCf, Function()
-                                                                          Return True
-                                                                      End Function)
-            End If
-            Return _salvaCfCommand
-        End Get
-        Set(value As RelayCommand)
-            _salvaCfCommand = value
-        End Set
-    End Property
 
-    Private Sub SalvaCf()
+    Public Sub SalvaCf()
         If AppContext IsNot Nothing Then
             AppContext.SoggettiFiscali.Add(Soggetto)
 
@@ -76,11 +55,10 @@ Public Class CodiceFiscaleViewModel
         End If
     End Sub
 
-    Private Sub CalcolaCf()
+    Public Sub CalcolaCf()
         Soggetto.CodiceFiscale = CodiceFiscaleHelper.CalcolaCodiceFiscale(nome:=Soggetto.Name, cognome:=Soggetto.Cognome,
                                              sesso:=Soggetto.Sesso, datanascita:=Soggetto.DataNascita, codicecatastale:=Soggetto.CodiceCatastale)
     End Sub
-
 #End Region
 
     Public Overrides Function GetAppBar() As List(Of AppBarButton)
@@ -92,12 +70,12 @@ Public Class CodiceFiscaleViewModel
             .Label = "Salva"
             .Icon = New SymbolIcon(Symbol.Save)
         End With
+
         saveBtn.SetBinding(AppBarButton.CommandProperty, New Binding() With {.Source = Me, .Path = New PropertyPath("SalvaCfCommand")})
 
         'TODO: Delete Button '
         'TODO: Tessera Button '
         'TODO: New Button '
-
 
         cmds.Add(saveBtn)
 

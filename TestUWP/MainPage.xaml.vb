@@ -33,7 +33,7 @@ Public NotInheritable Class MainPage
     Private Sub ListView_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
         CmdBar.PrimaryCommands.Clear()
 
-        For Each cmd In Vm.SelectedViewModel.GetAppBar
+        For Each cmd In Vm.GetAppBar
             CmdBar.PrimaryCommands.Add(cmd)
         Next
     End Sub
