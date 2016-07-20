@@ -6,7 +6,7 @@
             Return String.Empty
         End If
 
-        Return value.ToString().Substring(0, 1)
+        Return value.ToString().Substring(0, 1).ToUpper()
 
     End Function
 

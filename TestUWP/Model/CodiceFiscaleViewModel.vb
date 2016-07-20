@@ -3,6 +3,8 @@
 Public Class CodiceFiscaleViewModel
     Inherits ViewModelBase
 
+    Public Event ViewModelChanged As ViewModelChangedHandler
+
     Public Sub New()
         Soggetto = New SoggettoFiscale()
 
@@ -46,20 +48,12 @@ Public Class CodiceFiscaleViewModel
         End Set
     End Property
 
-
-    Public Sub SalvaCf()
-        If AppContext IsNot Nothing Then
-            AppContext.SoggettiFiscali.Add(Soggetto)
-
-            AppContext.SaveChanges()
-        End If
-    End Sub
-
     Public Sub CalcolaCf()
         Soggetto.CodiceFiscale = CodiceFiscaleHelper.CalcolaCodiceFiscale(nome:=Soggetto.Name, cognome:=Soggetto.Cognome,
                                              sesso:=Soggetto.Sesso, datanascita:=Soggetto.DataNascita, codicecatastale:=Soggetto.CodiceCatastale)
     End Sub
 #End Region
+
 
     Public Overrides Function GetAppBar() As List(Of AppBarButton)
         Dim cmds As List(Of AppBarButton) = New List(Of AppBarButton)
@@ -71,7 +65,7 @@ Public Class CodiceFiscaleViewModel
             .Icon = New SymbolIcon(Symbol.Save)
         End With
 
-        saveBtn.SetBinding(AppBarButton.CommandProperty, New Binding() With {.Source = Me, .Path = New PropertyPath("SalvaCfCommand")})
+        saveBtn.SetBinding(ButtonBase.CommandProperty, New Binding() With {.Source = Me, .Path = New PropertyPath("SalvaCfCommand")})
 
         'TODO: Delete Button '
         'TODO: Tessera Button '
@@ -84,6 +78,7 @@ Public Class CodiceFiscaleViewModel
 
     Private Sub OnPropChanged(sender As Object, e As PropertyChangedEventArgs)
         CalcolaCfCommand.RaiseCanExecuteChanged()
+        RaiseEvent ViewModelChanged(sender, e)
     End Sub
 
     Public Overrides Function LoadViewModelAsync() As Object

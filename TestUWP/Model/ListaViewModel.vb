@@ -1,13 +1,38 @@
 ﻿Public Class ListaViewModel
     Inherits ViewModelBase
 
+    Public Event ViewModelChanged As ViewModelChangedHandler
     Public ReadOnly Property VmName As String = "Lista"
+
+    Private _Soggetti As ObservableCollection(Of SoggettoFiscale)
     Public Property Soggetti As ObservableCollection(Of SoggettoFiscale)
+        Get
+            Return _Soggetti
+        End Get
+        Set(value As ObservableCollection(Of SoggettoFiscale))
+            _Soggetti = value
+
+        End Set
+    End Property
+
+    Private _selectedSoggetto As SoggettoFiscale
     Public Property SelectedSoggetto As SoggettoFiscale
+        Get
+            Return _selectedSoggetto
+        End Get
+        Set(value As SoggettoFiscale)
+            _selectedSoggetto = value
+            RaiseEvent ViewModelChanged(Me, New PropertyChangedEventArgs("SelectedSoggetto"))
+        End Set
+    End Property
 
     Public Overrides Function LoadViewModelAsync() As Object
         If AppContext IsNot Nothing Then
             Soggetti = New ObservableCollection(Of SoggettoFiscale)(AppContext.SoggettiFiscali.ToList())
+        End If
+
+        If Soggetti.Count > 0 Then
+            SelectedSoggetto = Soggetti(0)
         End If
 
         Return Me
