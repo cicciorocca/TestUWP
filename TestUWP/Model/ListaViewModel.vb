@@ -1,7 +1,9 @@
 ﻿Public Class ListaViewModel
     Inherits ViewModelBase
+    Implements INotifyPropertyChanged
 
     Public Event ViewModelChanged As ViewModelChangedHandler
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
     Public ReadOnly Property VmName As String = "Lista"
 
     Private _Soggetti As ObservableCollection(Of SoggettoFiscale)
@@ -11,7 +13,7 @@
         End Get
         Set(value As ObservableCollection(Of SoggettoFiscale))
             _Soggetti = value
-
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs("Soggetti"))
         End Set
     End Property
 

@@ -7,13 +7,20 @@ Public Class CodiceFiscaleViewModel
 
     Public Sub New()
         Soggetto = New SoggettoFiscale()
-
-        AddHandler Soggetto.PropertyChanged, AddressOf OnPropChanged
     End Sub
 
     Public ReadOnly Property VmName As String = "Calcola"
 
+    Private _Soggetto As SoggettoFiscale
     Public Property Soggetto As SoggettoFiscale
+        Get
+            Return _Soggetto
+        End Get
+        Set(value As SoggettoFiscale)
+            _Soggetto = value
+            AddHandler Soggetto.PropertyChanged, AddressOf OnPropChanged
+        End Set
+    End Property
 
     Private _Comuni As List(Of ComuneCodCat)
     Public ReadOnly Property Comuni As List(Of ComuneCodCat)
@@ -23,6 +30,7 @@ Public Class CodiceFiscaleViewModel
     End Property
 
 #Region "Commands"
+
     Private _canExecuteCalcolaCf As Boolean
     Public ReadOnly Property CanExecuteCalcolaCf As Boolean
         Get
@@ -52,6 +60,7 @@ Public Class CodiceFiscaleViewModel
         Soggetto.CodiceFiscale = CodiceFiscaleHelper.CalcolaCodiceFiscale(nome:=Soggetto.Name, cognome:=Soggetto.Cognome,
                                              sesso:=Soggetto.Sesso, datanascita:=Soggetto.DataNascita, codicecatastale:=Soggetto.CodiceCatastale)
     End Sub
+
 #End Region
 
 

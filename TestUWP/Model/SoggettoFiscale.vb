@@ -80,6 +80,8 @@ Public Class SoggettoFiscale
         Cognome = ""
         Sesso = Sex.M
         DataNascita = Date.Today
+        CodiceCatastale = ""
+        CodiceFiscale = ""
     End Sub
 
     Private Sub OnPropertyChanged(ByVal PropertyName As String)

@@ -1,5 +1,10 @@
 ﻿Imports GalaSoft.MvvmLight.Command
 
+Public Enum ViewModels
+    Lista
+    Calcola
+End Enum
+
 Public Class MainViewModel
     Inherits ViewModelBase
     Implements INotifyPropertyChanged
@@ -8,14 +13,17 @@ Public Class MainViewModel
     Public Sub New()
         ' Inizializzazione contenuto ViewModel '
         Dim CfVm As CodiceFiscaleViewModel = New CodiceFiscaleViewModel() With {.AppContext = GetAppContextInstance()}
+        CfVm.LoadViewModelAsync()
+
         Dim LsVm As ListaViewModel = New ListaViewModel() With {.AppContext = GetAppContextInstance()}
+        LsVm.LoadViewModelAsync()
 
         AddHandler CfVm.ViewModelChanged, AddressOf OnViewModelChanged
         AddHandler LsVm.ViewModelChanged, AddressOf OnViewModelChanged
 
         MainVm = New List(Of Object) From {LsVm, CfVm}
 
-        SelectedViewModel = MainVm(0)
+        SelectedViewModel = MainVm(ViewModels.Lista)
     End Sub
 
     Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
@@ -29,6 +37,9 @@ Public Class MainViewModel
         End Get
         Set(value As ViewModelBase)
             _selectedViewModel = value
+            If value.GetType.Equals(GetType(CodiceFiscaleViewModel)) Then
+                CType(_selectedViewModel, CodiceFiscaleViewModel).Soggetto = New SoggettoFiscale()
+            End If
             OnPropertyChanged("SelectedViewModel")
         End Set
     End Property
@@ -46,6 +57,20 @@ Public Class MainViewModel
     Public ReadOnly Property CanExecuteEliminaSoggetto As Boolean
         Get
             Return (CType(SelectedViewModel, ListaViewModel).SelectedSoggetto IsNot Nothing)
+        End Get
+    End Property
+
+    Private _canExecuteModificaSoggetto As Boolean
+    Public ReadOnly Property CanExecuteModificaSoggetto As Boolean
+        Get
+            Return (CType(SelectedViewModel, ListaViewModel).SelectedSoggetto IsNot Nothing)
+        End Get
+    End Property
+
+    Private _canExecuteNuovoSoggetto As Boolean
+    Public ReadOnly Property CanExecuteNuovoSoggetto As Boolean
+        Get
+            Return True
         End Get
     End Property
 
@@ -82,7 +107,48 @@ Public Class MainViewModel
         End Set
     End Property
 
+    Private _modificaSoggettoCommand As RelayCommand
+    Public Property ModificaSoggettoCommand As RelayCommand
+        Get
+            If _modificaSoggettoCommand Is Nothing Then
+                _modificaSoggettoCommand = New RelayCommand(AddressOf ModificaSoggetto, Function()
+                                                                                            Return CanExecuteModificaSoggetto
+                                                                                        End Function)
+            End If
+
+            Return _modificaSoggettoCommand
+        End Get
+        Set(value As RelayCommand)
+            _modificaSoggettoCommand = value
+        End Set
+    End Property
+
+    Private _nuovoSoggettoCommand As RelayCommand
+    Public Property NuovoSoggettoCommand As RelayCommand
+        Get
+            If _nuovoSoggettoCommand Is Nothing Then
+                _nuovoSoggettoCommand = New RelayCommand(AddressOf NuovoSoggetto, Function()
+                                                                                      Return CanExecuteNuovoSoggetto
+                                                                                  End Function)
+            End If
+            Return _nuovoSoggettoCommand
+        End Get
+        Set(value As RelayCommand)
+
+        End Set
+    End Property
+
 #End Region
+
+    Private Sub NuovoSoggetto()
+        SelectedViewModel = MainVm(ViewModels.Calcola)
+    End Sub
+
+    Private Sub ModificaSoggetto()
+        Dim SelectedSoggetto = CType(SelectedViewModel, ListaViewModel).SelectedSoggetto
+        SelectedViewModel = MainVm(ViewModels.Calcola)
+        MainVm(ViewModels.Calcola).Soggetto = SelectedSoggetto
+    End Sub
 
     Private Sub EliminaSoggetto()
         Dim lsVm As ListaViewModel = SelectedViewModel
@@ -92,7 +158,10 @@ Public Class MainViewModel
 
         If AppContext IsNot Nothing Then
             AppContext.SoggettiFiscali.Remove(lsVm.SelectedSoggetto)
-
+            lsVm.Soggetti.Remove(lsVm.SelectedSoggetto)
+            If lsVm.Soggetti.Count > 0 Then
+                lsVm.SelectedSoggetto = lsVm.Soggetti.First
+            End If
             AppContext.SaveChanges()
         End If
     End Sub
@@ -106,8 +175,9 @@ Public Class MainViewModel
             If Not AppContext.SoggettiFiscali.Contains(CfVm.Soggetto) Then
                 AppContext.SoggettiFiscali.Add(CfVm.Soggetto)
             End If
-
             AppContext.SaveChanges()
+
+            MainVm(ViewModels.Lista).Soggetti = New ObservableCollection(Of SoggettoFiscale)(AppContext.SoggettiFiscali)
         End If
     End Sub
 
@@ -148,6 +218,7 @@ Public Class MainViewModel
             Dim addBtn As AppBarButton = New AppBarButton
             addBtn.Label = "Nuovo"
             addBtn.Icon = New SymbolIcon(Symbol.AddFriend)
+            addBtn.SetBinding(ButtonBase.CommandProperty, New Binding() With {.Source = Me, .Path = New PropertyPath("NuovoSoggettoCommand")})
             cmds.Add(addBtn)
 
             ' Delete Button '
@@ -162,6 +233,8 @@ Public Class MainViewModel
             Dim editBtn As AppBarButton = New AppBarButton()
             editBtn.Label = "Modifica"
             editBtn.Icon = New SymbolIcon(Symbol.Edit)
+            editBtn.SetBinding(ButtonBase.CommandProperty, New Binding() With {.Source = Me, .Path = New PropertyPath("ModificaSoggettoCommand")})
+
             cmds.Add(editBtn)
 
             'saveBtn.SetBinding(AppBarButton.CommandProperty, New Binding() With {.Source = Me, .Path = New PropertyPath("SalvaCfCommand")})
@@ -174,11 +247,13 @@ Public Class MainViewModel
     End Function
 
     Private Sub OnViewModelChanged(sender As Object, e As PropertyChangedEventArgs)
-        If sender.GetType.Equals(GetType(CodiceFiscaleViewModel)) Then
+        If SelectedViewModel.GetType.Equals(GetType(CodiceFiscaleViewModel)) Then
             SalvaSoggettoCommand.RaiseCanExecuteChanged()
         End If
-        If sender.GetType.Equals(GetType(ListaViewModel)) Then
+        If SelectedViewModel.GetType.Equals(GetType(ListaViewModel)) Then
             EliminaSoggettoCommand.RaiseCanExecuteChanged()
+            ModificaSoggettoCommand.RaiseCanExecuteChanged()
+            NuovoSoggettoCommand.RaiseCanExecuteChanged()
         End If
     End Sub
 
